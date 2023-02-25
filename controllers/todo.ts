@@ -26,7 +26,7 @@ export const updateTodo = async (
     const { id } = req.params;
     const todoRepository = AppDataSource.getRepository(Todo);
     const todo = await todoRepository.findOneBy({
-      id: 1,
+      id: parseInt(id),
     });
 
     if (!todo || todo?.status !== TodoStatus.COMPLETE) {

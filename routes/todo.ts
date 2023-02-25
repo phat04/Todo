@@ -13,7 +13,7 @@ import {
 const router = Router();
 
 router.route("/").post(addTodo).get(getAllTodo);
-router.route("/updateTodo").post(updateTodo);
+router.route("/updateTodo/:id").post(updateTodo);
 router.route("/updateTodo2/:id").post(updateTodo2);
 router.route("/deleteTodo/:id").delete(deleteTodo);
 router.route("/getByIdTodo/:id").get(getByIdTodo);

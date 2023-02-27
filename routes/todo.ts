@@ -8,6 +8,7 @@ import {
   assignTodo,
   getAllTaskByUser,
   getByIdTodo,
+  pagination,
 } from "../controllers/todo";
 
 const router = Router();
@@ -19,4 +20,5 @@ router.route("/deleteTodo/:id").delete(deleteTodo);
 router.route("/getByIdTodo/:id").get(getByIdTodo);
 router.route("/assignTodo/:id").post(assignTodo);
 router.route("/getAllTaskByUser/:user_id").get(getAllTaskByUser);
+router.route("/pagination").get(pagination);
 export default router;

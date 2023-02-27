@@ -9,7 +9,7 @@ export const checkJwtToken = (
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.json({ message: "please try again" });
+      return res.status(400).json({ message: "please provide Token" });
     }
 
     const token = authHeader.split(" ")[1];

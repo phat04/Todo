@@ -19,7 +19,7 @@ export const sign_up = async (
     user.password = password;
     user.hashPassword();
     const result = await userRepository.save(user);
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
     console.error(error);
   }
@@ -42,9 +42,10 @@ export const sign_in = async (
         password: user.password,
       };
       const accessToken = createToken(JwtPayload);
-      user?.checkPassword(password) && res.json({ accessToken: accessToken });
+      user?.checkPassword(password) &&
+        res.status(200).json({ accessToken: accessToken });
     } else {
-      return res.json({
+      return res.status(404).json({
         message:
           "Not found User with name:" + name + " and password:" + password,
       });
@@ -62,7 +63,7 @@ export const getAllUser = async (
   try {
     const userRepository = AppDataSource.getRepository(User);
     const user = await userRepository.find();
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
   }

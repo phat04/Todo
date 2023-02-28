@@ -1,14 +1,11 @@
-import e, { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data";
 import { createToken } from "../middleware/createJwtToken";
 import { JwtPayload } from "../types/jwtPayload";
+import { createCustomError } from "../errors/custom-error";
 
-export const sign_up = async (
-  req: Request,
-  res: Response,
-  neet: NextFunction
-) => {
+export const sign_up = async (req: Request, res: Response) => {
   try {
     const userRepository = AppDataSource.getRepository(User);
     const user = new User();
@@ -18,17 +15,18 @@ export const sign_up = async (
     user.email = email;
     user.password = password;
     user.hashPassword();
-    const result = await userRepository.save(user);
-    res.status(200).json(result);
+    await userRepository.save(user);
+    res.status(200).json({ message: "success" });
   } catch (error) {
     console.error(error);
+    return;
   }
 };
 
 export const sign_in = async (
   req: Request,
   res: Response,
-  neet: NextFunction
+  next: NextFunction
 ) => {
   try {
     const userRepository = AppDataSource.getRepository(User);
@@ -45,13 +43,11 @@ export const sign_in = async (
       user?.checkPassword(password) &&
         res.status(200).json({ accessToken: accessToken });
     } else {
-      return res.status(404).json({
-        message:
-          "Not found User with name:" + name + " and password:" + password,
-      });
+      return next(createCustomError("Not found user", 404));
     }
   } catch (error) {
     console.error(error);
+    return;
   }
 };
 
@@ -63,8 +59,12 @@ export const getAllUser = async (
   try {
     const userRepository = AppDataSource.getRepository(User);
     const user = await userRepository.find();
-    res.status(200).json(user);
+    if (!user) {
+      return next(createCustomError("Not found user", 404));
+    }
+    res.status(200).json({ message: "success", user });
   } catch (error) {
     console.error(error);
+    return;
   }
 };

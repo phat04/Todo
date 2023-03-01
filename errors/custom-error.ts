@@ -5,7 +5,3 @@ export class CustomAPIError extends Error {
     this.statusCode = statusCode;
   }
 }
-
-export const createCustomError = (msg: string, statusCode: number) => {
-  return new CustomAPIError(msg, statusCode);
-};

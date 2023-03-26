@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { AppDataSource } from "../data";
 import { Todo, TodoStatus } from "../entity/Todo";
 import { User } from "../entity/User";

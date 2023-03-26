@@ -6,11 +6,11 @@ import { Todo } from "./entity/Todo";
 
 const AppDataSource = new DataSource({
   type: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "root",
-  password: "root",
-  database: "test",
+  host: process.env.HOST_DATABASE,
+  port: Number(process.env.PORT_DATABASE),
+  username: process.env.USERNAME_DATAASE,
+  password: process.env.PASSWORD_DATABASE,
+  database: process.env.DATABASE_DATABASE,
   entities: [User, Todo],
   logging: true,
   synchronize: true,
